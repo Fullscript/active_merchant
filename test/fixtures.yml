@@ -26,6 +26,11 @@ barclays_epdq:
   password: test
   client_id: 1234
 
+barclays_epdq_extra_plus:
+  login: merchant number
+  user: username
+  password: password
+
 beanstream:
   login: merchant id
   user: username
@@ -64,6 +69,9 @@ card_save:
 card_stream:
   login: X
   password: Y
+
+card_stream_modern:
+  login: "0000992"
 
 certo_direct:
   login: 1
@@ -125,6 +133,11 @@ fat_zebra:
 federated_canada:
   login: demo
   password: password
+
+finansbank:
+  login: TEST
+  password: TEST
+  client_id: TEST
 
 first_pay:
   login:
@@ -188,7 +201,16 @@ merchant_esolutions:
   login: "94100008043900000004"
   password: "gvQzgKXOTEoDzpzJzROrQQzoKLaEqxjf"
 
+merchant_one:
+  username: 'demo'
+  password: 'password'
+
 merchant_ware:
+ login:
+ password:
+ name:
+
+merchant_ware_version_four:
  login:
  password:
  name:
@@ -557,6 +579,10 @@ trans_first:
   password: PASSWORD
 
 transax:
+  login: transaxdemo
+  password: nelix123
+
+transnational:
   login: demo
   password: password
 
@@ -604,4 +630,3 @@ wirecard:
 world_pay_gateway:
   login: LOGIN
   password: PASSWORD
-
