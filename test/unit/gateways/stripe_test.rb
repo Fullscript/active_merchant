@@ -244,6 +244,7 @@ class StripeTest < Test::Unit::TestCase
   def test_successful_refund_with_refund_application_fee
     @gateway.expects(:ssl_request).with do |method, url, post, headers|
       post.include?("refund_application_fee=true")
+      post.include?("reverse_transfer=true")
     end.returns(successful_partially_refunded_response)
 
     assert response = @gateway.refund(@refund_amount, 'ch_test_charge', :refund_application_fee => true)
@@ -407,6 +408,14 @@ class StripeTest < Test::Unit::TestCase
     end.check_request do |method, endpoint, data, headers|
       assert_match(/application_fee=144/, data)
     end.respond_with(successful_capture_response)
+  end
+
+  def test_destination_is_submitted_for_purchase
+    stub_comms(@gateway, :ssl_request) do
+      @gateway.purchase(@amount, @credit_card, @options.merge({:destination => 'subaccountid'}))
+    end.check_request do |method, endpoint, data, headers|
+      assert_match(/destination=subaccountid/, data)
+    end.respond_with(successful_purchase_response)
   end
 
   def test_client_data_submitted_with_purchase

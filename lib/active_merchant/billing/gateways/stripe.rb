@@ -103,7 +103,10 @@ module ActiveMerchant #:nodoc:
       def refund(money, identification, options = {})
         post = {}
         add_amount(post, money, options)
-        post[:refund_application_fee] = true if options[:refund_application_fee]
+        if options[:refund_application_fee]
+          post[:refund_application_fee] = true
+          post[:reverse_transfer] = true
+        end
 
         MultiResponse.run(:first) do |r|
           r.process { commit(:post, "charges/#{CGI.escape(identification)}/refund", post, options) }
@@ -244,6 +247,7 @@ module ActiveMerchant #:nodoc:
 
         add_flags(post, options)
         add_application_fee(post, options)
+        add_destination(post, options)
         post
       end
 
@@ -255,6 +259,10 @@ module ActiveMerchant #:nodoc:
 
       def add_application_fee(post, options)
         post[:application_fee] = options[:application_fee] if options[:application_fee]
+      end
+
+      def add_destination(post, options)
+        post[:destination] = options[:destination] if options[:destination]
       end
 
       def add_expand_parameters(post, options)
