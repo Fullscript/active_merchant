@@ -315,7 +315,7 @@ class StripeTest < Test::Unit::TestCase
 
   def test_successful_refund_with_refund_application_fee
     @gateway.expects(:ssl_request).with do |method, url, post, headers|
-      post.include?("refund_application_fee=true")
+      post.include?("refund_application_fee=true") &&
       post.include?("reverse_transfer=true")
     end.returns(successful_partially_refunded_response)
 
